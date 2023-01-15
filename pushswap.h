@@ -6,7 +6,7 @@
 /*   By: kakiba <kotto555555@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 19:04:33 by kakiba            #+#    #+#             */
-/*   Updated: 2022/12/31 18:12:21 by kakiba           ###   ########.fr       */
+/*   Updated: 2023/01/15 10:48:22 by kakiba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <errno.h>
 
 # define ERROR 1
+
+void	exit_error(t_dlist **list, void *a, void *b, char *error_text);
 
 /* ---- check_error.c ---- */
 int		check_error(int argc, char *argv[], int *list);

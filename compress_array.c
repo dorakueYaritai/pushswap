@@ -6,7 +6,7 @@
 /*   By: kakiba <kotto555555@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:19:58 by kakiba            #+#    #+#             */
-/*   Updated: 2023/01/11 23:57:03 by kakiba           ###   ########.fr       */
+/*   Updated: 2023/01/15 20:26:03 by kakiba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	*dup_int_array(int *list, int n)
 
 	dup = malloc(sizeof(int) * n);
 	if (dup == NULL)
-		return (NULL);
+		exit_error(NULL, list, NULL, "ERROR");
 	i = 0;
 	while (i < n)
 	{
@@ -71,6 +71,8 @@ void	exec_compress(int **nsort, int *sort, int n)
 	int	j;
 
 	buf = malloc(sizeof(int) * n);
+	if (buf == NULL)
+		exit_error(NULL, *nsort, sort, "ERROR");
 	i = 0;
 	while (i < n)
 	{

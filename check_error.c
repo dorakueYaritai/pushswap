@@ -6,7 +6,7 @@
 /*   By: kakiba <kotto555555@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:26:37 by kakiba            #+#    #+#             */
-/*   Updated: 2023/01/11 23:01:48 by kakiba           ###   ########.fr       */
+/*   Updated: 2023/01/15 11:02:24 by kakiba           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ static int	x_check_is_disit_arg(char *argv[], int i, int j, int *list);
 
 int	check_error(int argc, char *argv[], int *list)
 {
-	size_t	i;
+	int		i;
 	size_t	j;
+	size_t	len;
 
 	if (!list)
-		return (ERROR);
+		exit_error(NULL, NULL, NULL, "ERROR");
 	if (argc == 1)
-	{
-		free (list);
-		return (ERROR);
-	}
+		exit_error(NULL, list, NULL, NULL);
 	i = 1;
-	while (i < (size_t)argc)
+	while (i < argc)
 	{
 		j = 0;
-		while (j < ft_strlen(argv[i]))
+		if (argv[i] == NULL)
+			exit_error(NULL, list, NULL, "ERROR");
+		len = ft_strlen(argv[i]);
+		while (j < len)
 		{
-			if (x_check_is_disit_arg(argv, i, j, list) == ERROR)
-				return (ERROR);
+			x_check_is_disit_arg(argv, i, j, list);
 			j++;
 		}
 		++i;
@@ -50,9 +50,7 @@ static int	x_check_is_disit_arg(char *argv[], int i, int j, int *list)
 		!(j == 0 && (argv[i][j] == '-' || argv[i][j] == '+') && \
 		('1' <= argv[i][j + 1] && argv[i][j + 1] <= '9')))
 	{
-		write(2, "ERROR\n", 7);
-		free (list);
-		return (ERROR);
+		exit_error(NULL, list, NULL, "ERROR");
 	}
 	return (0);
 }
@@ -60,18 +58,14 @@ static int	x_check_is_disit_arg(char *argv[], int i, int j, int *list)
 static int	check_error_strtol(int argc, char *argv[], int *list)
 {
 	long	buf;
-	size_t	i;
+	int		i;
 
 	i = 1;
-	while (i < (size_t)argc)
+	while (i < argc)
 	{
 		buf = ft_strtol(argv[i], NULL, 10);
 		if (buf > INT_MAX || buf < INT_MIN)
-		{
-			write(2, "ERROR\n", 7);
-			free (list);
-			return (1);
-		}
+			exit_error(NULL, list, NULL, "ERROR");
 		else
 			list[i - 1] = (int)buf;
 		++i;
@@ -81,23 +75,20 @@ static int	check_error_strtol(int argc, char *argv[], int *list)
 
 static int	check_error_dup(int argc, int *list)
 {
-	size_t	i;
-	size_t	j;
-	int		target;
+	int			i;
+	int			j;
+	int			target;
+	const int	list_size = argc - 1;
 
 	i = 0;
-	while (i + 1 < (size_t)argc)
+	while (i < list_size)
 	{
 		target = list[i];
 		j = i + 1;
-		while (j + 1 < (size_t)argc)
+		while (j < list_size)
 		{
 			if (target == list[j++])
-			{
-				write(2, "ERROR\n", 7);
-				free (list);
-				return (ERROR);
-			}
+				exit_error(NULL, list, NULL, "ERROR");
 		}
 		++i;
 	}

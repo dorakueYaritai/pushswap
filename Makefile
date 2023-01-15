@@ -31,9 +31,8 @@ $(LIBFT):
 	all clean bonus fclean re;
 
 clean:
-	rm -f $(NAME) $(OBJS)
+	rm -f $(OBJS)
 	cd $(LIBFTDIR) && make clean
-
 
 bonus:
 	make WITH_BONUS=1
